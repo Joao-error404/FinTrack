@@ -122,13 +122,14 @@ struct ExpensesView: View {
                                 .fontWeight(.semibold)
                                 .foregroundStyle(selectedTab == index ? .white : .secondary)
                                 .frame(maxWidth: .infinity)
-                                .padding(.vertical, 12)
-                                .background(selectedTab == index ? Color.gray : Color.clear)
+                                .padding(.vertical, 4)
+                                .background(selectedTab == index ? Color.blue : Color.clear)
                                 .clipShape(Capsule())
                         }
                     }
                 }
                 .padding(4)
+                .background(Color.gray.opacity(0.3))
                 .clipShape(Capsule())
                 .padding()
                 
