@@ -9,9 +9,18 @@ import SwiftUI
 
 @main
 struct FinTrackApp: App {
+    
+    @State private var selectedTab = "home"
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TabView (selection: $selectedTab) {
+                ExpensesView()
+                    .tabItem {
+                        Label("Expenses", systemImage: "wallet.bifold")
+                    }
+                    .tag("expenses")
+            }
         }
     }
 }
