@@ -7,9 +7,107 @@
 
 import SwiftUI
 
+struct FrameModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .padding(.horizontal, 10)
+            .frame(maxWidth: 170, maxHeight: 80, alignment: .leading)
+            .background {
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(Color.gray.opacity(0.3))
+                    .shadow(
+                        color: .black.opacity(0.1),
+                        radius: 6
+                    )
+            }
+    }
+}
+
+extension View {
+    func frameStyle() -> some View {
+        modifier(FrameModifier())
+    }
+}
+
 struct ExpensesView: View {
+    @State private var totalTransactions = 0
+    @State private var totalEarnings = 0.0
+    @State private var totalExpenses = 0.0
+    @State private var actualMonth = currentMonth
+    
+    static var currentMonth: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US")
+        dateFormatter.dateFormat = "MMMM"
+        
+        let monthName = dateFormatter.string(from: Date())
+        return monthName
+    }
+    
+    func formattedNumber (_ number: Double) -> String {
+        let currencyCode = Locale.current.currency?.identifier ?? "BRL"
+        
+        if number >= 100_000 {
+            return String(format: "%.0fK", number / 1_000)
+        }
+        
+        return number.formatted(.currency(code: currencyCode))
+    }
+    
     var body: some View {
-        Text("Expenses")
+        NavigationStack {
+            VStack {
+                HStack(spacing: 30){
+                    HStack {
+                        ZStack {
+                            Circle()
+                                .fill(Color.green.opacity(0.2))
+                                .frame(width: 30, height: 30)
+                            
+                            Image(systemName: "arrow.up.right")
+                                .font(.system(size: 10))
+                                .foregroundStyle(Color.green)
+                        }
+                        
+                        VStack(alignment: .leading){
+                            Text("Earnings")
+                                .font(.caption)
+                            Text(formattedNumber(totalEarnings))
+                                .font(.headline)
+                                .lineLimit(1)
+                        }
+                    }
+                    .frameStyle()
+                    
+                    HStack{
+                        ZStack {
+                            Circle()
+                                .fill(Color.red.opacity(0.5))
+                                .frame(width: 30, height: 30)
+                            
+                            Image(systemName: "arrow.down.right")
+                                .font(.system(size: 10))
+                                .foregroundStyle(Color.red)
+                        }
+                        VStack(alignment: .leading){
+                            Text("Expenses")
+                                .font(.caption)
+                            Text(formattedNumber(totalExpenses))
+                                .font(.headline)
+                                .lineLimit(1)
+    
+                        }
+                    }
+                    .frameStyle()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
+                
+                Spacer()
+            }
+            .navigationTitle("Expenses")
+            .navigationSubtitle("\(totalTransactions) transactions - \(actualMonth)")
+        }
     }
 }
 
