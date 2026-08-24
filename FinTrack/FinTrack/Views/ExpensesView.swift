@@ -35,6 +35,14 @@ struct ExpensesView: View {
     @State private var totalExpenses = 0.0
     @State private var actualMonth = currentMonth
     
+    @State private var selectedTab = 0
+    
+    let tabs = [
+        "All",
+        "Income",
+        "Expense"
+    ]
+    
     static var currentMonth: String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US")
@@ -102,6 +110,27 @@ struct ExpensesView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
+                
+                HStack(spacing: 0) {
+                    ForEach(tabs.indices, id: \.self) { index in
+                        Button {
+                            withAnimation {
+                                selectedTab = index
+                            }
+                        } label: {
+                            Text(tabs[index])
+                                .fontWeight(.semibold)
+                                .foregroundStyle(selectedTab == index ? .white : .secondary)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 12)
+                                .background(selectedTab == index ? Color.gray : Color.clear)
+                                .clipShape(Capsule())
+                        }
+                    }
+                }
+                .padding(4)
+                .clipShape(Capsule())
+                .padding()
                 
                 Spacer()
             }
