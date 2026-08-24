@@ -70,7 +70,7 @@ struct ExpensesView: View {
                         }
                         
                         VStack(alignment: .leading){
-                            Text("Earnings")
+                            Text("Income")
                                 .font(.caption)
                             Text(formattedNumber(totalEarnings))
                                 .font(.headline)
@@ -105,7 +105,7 @@ struct ExpensesView: View {
                 
                 Spacer()
             }
-            .navigationTitle("Expenses")
+            .navigationTitle("Transactions")
             .navigationSubtitle("\(totalTransactions) transactions - \(actualMonth)")
         }
     }

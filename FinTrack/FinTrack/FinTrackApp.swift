@@ -17,9 +17,9 @@ struct FinTrackApp: App {
             TabView (selection: $selectedTab) {
                 ExpensesView()
                     .tabItem {
-                        Label("Expenses", systemImage: "wallet.bifold")
+                        Label("Transactions", systemImage: "wallet.bifold")
                     }
-                    .tag("expenses")
+                    .tag("transactions")
             }
         }
     }
