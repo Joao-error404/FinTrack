@@ -22,7 +22,7 @@ struct SummaryCard: View {
                 .foregroundColor(color)
 
             Text(title)
-                .foregroundColor(.gray)
+                .foregroundColor(Color("TextMuted"))
 
             Text(value)
                 .font(.title3)
@@ -31,7 +31,7 @@ struct SummaryCard: View {
         }
         .padding()
         .frame(maxWidth: .infinity)
-        .background(Color.white.opacity(0.05))
+        .background(Color("Surface"))
         .cornerRadius(24)
     }
 }

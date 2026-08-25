@@ -10,26 +10,32 @@ import SwiftUI
 struct FinanceDashboardView: View {
 
     var body: some View {
-        ZStack {
-            Color.black
-                .ignoresSafeArea()
-
-            VStack(spacing: 24) {
-
-                HeaderView()
-
-                BalanceCardView()
-
-                SummaryCardsView()
-
-                RecentTransactionsView()
-
-                Spacer()
+        NavigationStack {
+            ZStack {
+                Color("Background")
+                    .ignoresSafeArea()
+                ScrollView {
+                    VStack(spacing: 24) {
+                        
+                        HeaderView()
+                        
+                        BalanceCardView()
+                        
+                        SummaryCardsView()
+                        
+                        RecentTransactionsView()
+                        
+                        Spacer()
+                    }
+                    .padding(20)
+                    
+                    
+                }
             }
-            .padding(20)
-            
-
-           
         }
     }
+}
+
+#Preview {
+    FinanceDashboardView()
 }

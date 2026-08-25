@@ -20,11 +20,11 @@ struct TransactionRowView: View {
         HStack {
 
             Circle()
-                .fill(Color.orange.opacity(0.2))
+                .fill(Color("Accent").opacity(0.2))
                 .frame(width: 50, height: 50)
                 .overlay(
                     Image(systemName: icon)
-                        .foregroundColor(.orange)
+                        .foregroundColor(Color("Accent"))
                 )
 
             VStack(alignment: .leading) {
@@ -34,7 +34,7 @@ struct TransactionRowView: View {
                     .bold()
 
                 Text(subtitle)
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("TextMuted"))
             }
 
             Spacer()
