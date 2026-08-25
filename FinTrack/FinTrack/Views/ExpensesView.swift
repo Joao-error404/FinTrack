@@ -13,13 +13,18 @@ struct FrameModifier: ViewModifier {
             .padding(.horizontal, 10)
             .frame(maxWidth: .infinity, minHeight: 80, alignment: .leading)
             .background {
-                RoundedRectangle(cornerRadius: 10)
+                RoundedRectangle(cornerRadius: 25)
                     .fill(Color("Surface"))
                     .shadow(
                         color: .black.opacity(0.1),
                         radius: 6
                     )
             }
+            .overlay {
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(Color("Border"), lineWidth: 1)
+            }
+            
     }
 }
 
@@ -30,7 +35,6 @@ extension View {
 }
 
 struct ExpensesView: View {
-    @State private var totalTransactions = 0
     @State private var totalEarnings = 0.0
     @State private var totalExpenses = 0.0
     @State private var actualMonth = currentMonth
@@ -42,6 +46,14 @@ struct ExpensesView: View {
         "Income",
         "Expense"
     ]
+    
+    let transactions = [
+        ("heart.fill", "Title 1", "Subtitle", "R$0,00"),
+        ("cart.fill", "Title 2", "Subtitle", "R$20,00"),
+        ("car.fill", "Title 3", "Subtitle", "R$150,00"),
+        ("house.fill", "Title 4", "Subtitle", "R$800,00")
+    ]
+    
     
     static var currentMonth: String {
         let dateFormatter = DateFormatter()
@@ -74,9 +86,9 @@ struct ExpensesView: View {
                             .foregroundStyle(Color("Foreground"))
                             .font(.title)
                             .fontWeight(.bold)
-                        Text("\(totalTransactions) transactions - \(actualMonth)")
+                        Text("\(transactions.count) transactions - \(actualMonth)")
                             .foregroundStyle(Color("TextMuted"))
-                            .font(.caption)
+                            .font(.footnote)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
@@ -96,7 +108,7 @@ struct ExpensesView: View {
                                 }
                                 
                                 VStack(alignment: .leading){
-                                    Text("Income")
+                                    Text("Incomes")
                                         .font(.caption)
                                         .foregroundStyle(Color("TextMuted"))
                                     Text(formattedNumber(totalEarnings))
@@ -156,34 +168,61 @@ struct ExpensesView: View {
                         .padding(4)
                         .background(Color("Surface"))
                         .clipShape(Capsule())
-                        .padding()
-                        
-                        LazyVStack(spacing: 12){
-                            HStack{
-                                Image(systemName: "heart.fill")
-                                VStack(alignment: .leading) {
-                                    Text("Title")
-                                        .font(.headline)
-                                        .lineLimit(1)
-                                        .foregroundStyle(Color("Foreground"))
-                                    Text("Subtitle")
-                                        .font(.subheadline)
-                                        .foregroundStyle(Color("TextMuted"))
-                                        .lineLimit(1)
-                                }
-                                .padding(.horizontal, 10)
-                                Spacer()
-                                Text("R$0,00")
-                                    .fontWeight(.bold)
-                                    .foregroundStyle(Color("Foreground"))
-                            }
+                        .overlay {
+                            Capsule()
+                                .stroke(Color("Border"), lineWidth: 1)
                         }
                         .padding()
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        
+                        LazyVStack(spacing: 0){
+                            ForEach(transactions.indices, id: \.self) { index in
+                            let transaction = transactions[index]
+                                HStack(spacing: 12){
+                                    Image(systemName: transaction.0)
+                                        .foregroundStyle(Color("Accent"))
+                                        .frame(width: 32, height: 32)
+                                        .background(Color("Accent").opacity(0.15))
+                                        .clipShape(Circle())
+                                    
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        Text(transaction.1)
+                                            .font(.headline)
+                                            .lineLimit(1)
+                                            .foregroundStyle(Color("Foreground"))
+                                        Text(transaction.2)
+                                            .font(.subheadline)
+                                            .lineLimit(1)
+                                            .foregroundStyle(Color("TextMuted"))
+                                            
+                                    }
+                                    
+                                    Spacer(minLength: 12)
+                                    
+                                    Text(transaction.3)
+                                        .fontWeight(.bold)
+                                        .foregroundStyle(Color("Foreground"))
+                                        .lineLimit(1)
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                
+                                if index < transactions.count - 1 {
+                                    Divider()
+                                        .overlay(Color("Border"))
+                                        .padding(.leading, 60)
+                                }
+                            }
+                            
+                        }
                         .background(Color("Surface"))
                         .clipShape(RoundedRectangle(cornerRadius: 10))
+                        .overlay {
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color("Border"), lineWidth: 1)
+                        }
                         .padding(.horizontal)
                     }
+                    
                 }
             }
         }
