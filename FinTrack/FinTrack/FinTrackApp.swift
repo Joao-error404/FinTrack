@@ -26,6 +26,7 @@ struct FinTrackApp: App {
                     }
                     .tag("transactions")
             }
+            .preferredColorScheme(.dark)
         }
     }
 }
