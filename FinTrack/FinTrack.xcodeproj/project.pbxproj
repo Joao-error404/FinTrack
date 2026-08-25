@@ -11,7 +11,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		3399C793303DB3F8000F4AFA /* Exceptions for "FinTrack" folder in "FinTrack" target */ = {
+		331B4AD0303DFEC80047EE9C /* Exceptions for "FinTrack" folder in "FinTrack" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
@@ -24,7 +24,7 @@
 		391482BF3038B71E00CF2AF9 /* FinTrack */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
-				3399C793303DB3F8000F4AFA /* Exceptions for "FinTrack" folder in "FinTrack" target */,
+				331B4AD0303DFEC80047EE9C /* Exceptions for "FinTrack" folder in "FinTrack" target */,
 			);
 			path = FinTrack;
 			sourceTree = "<group>";
