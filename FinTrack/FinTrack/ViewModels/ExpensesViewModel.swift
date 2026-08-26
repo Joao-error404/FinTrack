@@ -10,8 +10,17 @@ import Foundation
 
 @MainActor
 class ExpensesViewModel: ObservableObject {
-    @Published var totalIncomes = 0.0
-    @Published var totalExpenses = 0.0
+    var totalIncomes: Double {
+        transactions
+            .filter { $0.type == .income }
+            .reduce(0) { $0 + $1.amount }
+    }
+    var totalExpenses: Double {
+        transactions
+            .filter { $0.type == .expense }
+            .reduce(0) { $0 + $1.amount }
+    }
+    
     @Published var transactions = [
         FinancialTransaction(
             title: "Teste",
