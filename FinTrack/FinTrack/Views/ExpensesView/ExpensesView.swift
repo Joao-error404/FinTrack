@@ -8,22 +8,8 @@
 import SwiftUI
 
 struct ExpensesView: View {
-    @State private var totalIncomes = 0.0
-    @State private var totalExpenses = 0.0
+    @StateObject private var viewModel = ExpensesViewModel()
     @State private var selectedTab = 0
-    
-    let transactions = [
-        FinancialTransaction(
-            title: "Teste",
-            amount: 20.0,
-            type: TransactionType.expense,
-            category: TransactionCategory.education),
-        FinancialTransaction(
-            title: "Teste 2",
-            amount: 30.0,
-            type: TransactionType.income,
-            category: TransactionCategory.education)
-    ]
     
     var body: some View {
         NavigationStack {
@@ -32,26 +18,26 @@ struct ExpensesView: View {
                     .ignoresSafeArea()
                 ScrollView {
                     
-                    TransactionsHeader(transactionCount: transactions.count)
+                    TransactionsHeader(transactionCount: viewModel.transactions.count)
                     
                     VStack {
                         HStack{
                             TransactionsSummaryCard(
                                 title: "Incomes",
-                                amount: totalIncomes,
+                                amount: viewModel.totalIncomes,
                                 icon: "arrow.up.right",
                                 color: Color("Success"))
                             
                             TransactionsSummaryCard(
                                 title: "Expenses",
-                                amount: totalExpenses,
+                                amount: viewModel.totalExpenses,
                                 icon: "arrow.down.right",
                                 color: Color("Error"))
                         }
                         
                         TransactionsFilterTab(selectedTab: $selectedTab)
                         
-                        TransactionsList(transactions: transactions)
+                        TransactionsList(transactions: viewModel.transactions)
                     }
                     
                 }

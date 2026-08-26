@@ -12,10 +12,10 @@ struct TransactionsList: View {
     
     var body: some View {
         LazyVStack(spacing: 0){
-            ForEach(transactions.indices, id: \.self) { transaction in
-                TransactionsRow(transaction: transactions[transaction])
+            ForEach(transactions) { transaction in
+                TransactionsRow(transaction: transaction)
                 
-                if transaction != transactions.indices.last {
+                if transaction != transactions.last {
                     Divider()
                         .overlay(Color("Border"))
                         .padding(.horizontal, 20)
