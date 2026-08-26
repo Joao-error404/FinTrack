@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 @main
 struct FinTrackApp: App {
@@ -27,5 +28,6 @@ struct FinTrackApp: App {
                     .tag("transactions")
             }
         }
+        .modelContainer(for: FinancialTransaction.self)
     }
 }
