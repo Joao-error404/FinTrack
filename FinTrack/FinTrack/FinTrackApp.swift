@@ -27,6 +27,7 @@ struct FinTrackApp: App {
                     }
                     .tag("transactions")
             }
+            .preferredColorScheme(.dark)
         }
         .modelContainer(for: FinancialTransaction.self)
     }

@@ -17,21 +17,21 @@ struct SummaryCardsView: View {
                 icon: "arrow.up.right",
                 title: "Saldo líquido",
                 value: "R$ 6.8k",
-                color: .indigo
+                color: Color("Accent")
             )
 
             SummaryCard(
                 icon: "arrow.down.right",
                 title: "Total gastos",
                 value: "R$ 3.8k",
-                color: .red
+                color: Color("Error")
             )
 
             SummaryCard(
                 icon: "chart.line.uptrend.xyaxis",
                 title: "Entradas",
                 value: "R$ 10.6k",
-                color: .green
+                color: Color("Success")
             )
         }
     }

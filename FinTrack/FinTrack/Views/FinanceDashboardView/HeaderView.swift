@@ -12,7 +12,7 @@ struct HeaderView: View {
         HStack {
             
             VStack(alignment: .leading, spacing: 0){
-                Text("FinTrack")
+                Text(Date.currentMonthName)
                     .font(.caption)
                     .foregroundStyle(.gray)
                 

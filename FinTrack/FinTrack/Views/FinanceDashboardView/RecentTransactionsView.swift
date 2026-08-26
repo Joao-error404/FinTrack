@@ -24,7 +24,7 @@ struct RecentTransactionsView: View {
                 Button("Ver todos") {
 
                 }
-                .foregroundColor(.purple)
+                .foregroundColor(Color("Accent"))
             }
             
                 VStack(spacing: 0) {
@@ -34,7 +34,7 @@ struct RecentTransactionsView: View {
                         title: "Assado",
                         subtitle: "Transporte",
                         value: "-R$ 123,12",
-                        color: .red
+                        color: Color("Error")
                     )
                     
                     Divider()
@@ -44,7 +44,7 @@ struct RecentTransactionsView: View {
                         title: "Curso TypeScript",
                         subtitle: "Educação",
                         value: "-R$ 197,00",
-                        color: .red
+                        color: Color("Error")
                     )
                     
                     Divider()
@@ -54,7 +54,7 @@ struct RecentTransactionsView: View {
                         title: "Dividendos",
                         subtitle: "Investimentos",
                         value: "+R$ 340,00",
-                        color: .green
+                        color: Color("Success")
                     )
                 }
                 .padding()
