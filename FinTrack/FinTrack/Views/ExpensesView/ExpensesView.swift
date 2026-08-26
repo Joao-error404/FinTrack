@@ -67,18 +67,7 @@ struct ExpensesView: View {
                     .ignoresSafeArea()
                 ScrollView {
                     
-                    VStack (alignment: .leading){
-                        Text("Transactions")
-                            .foregroundStyle(Color("Foreground"))
-                            .font(.title)
-                            .fontWeight(.bold)
-                        Text("\(transactions.count) transactions - \(Date.currentMonthName)")
-                            .foregroundStyle(Color("TextMuted"))
-                            .font(.footnote)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.top, 20)
+                    TransactionsHeader(transactionCount: transactions.count)
                     
                     VStack {
                         HStack(spacing: 20){
@@ -162,12 +151,12 @@ struct ExpensesView: View {
                         
                         LazyVStack(spacing: 0){
                             ForEach(transactions.indices, id: \.self) { transaction in
-                                TransactionRow(transaction: transactions[transaction])
+                                TransactionsRow(transaction: transactions[transaction])
                                 
                                 if transaction != transactions.indices.last {
                                     Divider()
                                         .overlay(Color("Border"))
-                                        .padding()
+                                        .padding(.horizontal, 20)
                                 }
                             }
                             
