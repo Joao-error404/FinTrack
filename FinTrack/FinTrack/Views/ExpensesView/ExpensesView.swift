@@ -8,15 +8,9 @@
 import SwiftUI
 
 struct ExpensesView: View {
-    @State private var totalEarnings = 0.0
+    @State private var totalIncomes = 0.0
     @State private var totalExpenses = 0.0
     @State private var selectedTab = 0
-    
-    let tabs = [
-        "All",
-        "Income",
-        "Expense"
-    ]
     
     let transactions = [
         FinancialTransaction(
@@ -44,38 +38,20 @@ struct ExpensesView: View {
                         HStack{
                             TransactionsSummaryCard(
                                 title: "Incomes",
-                                amount: 0.0,
+                                amount: totalIncomes,
                                 icon: "arrow.up.right",
                                 color: Color("Success"))
                             
                             TransactionsSummaryCard(
                                 title: "Expenses",
-                                amount: 0.0,
+                                amount: totalExpenses,
                                 icon: "arrow.down.right",
                                 color: Color("Error"))
                         }
                         
-                        TransactionsFilterTab(tabs: tabs, selectedTab: $selectedTab)
+                        TransactionsFilterTab(selectedTab: $selectedTab)
                         
-                        LazyVStack(spacing: 0){
-                            ForEach(transactions.indices, id: \.self) { transaction in
-                                TransactionsRow(transaction: transactions[transaction])
-                                
-                                if transaction != transactions.indices.last {
-                                    Divider()
-                                        .overlay(Color("Border"))
-                                        .padding(.horizontal, 20)
-                                }
-                            }
-                            
-                        }
-                        .background(Color("Surface"))
-                        .clipShape(RoundedRectangle(cornerRadius: 10))
-                        .overlay {
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color("Border"), lineWidth: 1)
-                        }
-                        .padding(.horizontal)
+                        TransactionsList(transactions: transactions)
                     }
                     
                 }

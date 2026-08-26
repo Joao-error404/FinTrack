@@ -8,7 +8,11 @@
 import SwiftUI
 
 struct TransactionsFilterTab: View {
-    let tabs : [String]
+    let tabs = [
+        "All",
+        "Income",
+        "Expense"
+    ]
     
     @Binding var selectedTab: Int
     
