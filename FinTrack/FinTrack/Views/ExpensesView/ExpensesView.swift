@@ -46,10 +46,8 @@ struct ExpensesView: View {
     ]
     
     let transactions = [
-        ("heart.fill", "Title 1", "Subtitle", "R$0,00"),
-        ("cart.fill", "Title 2", "Subtitle", "R$20,00"),
-        ("car.fill", "Title 3", "Subtitle", "R$150,00"),
-        ("house.fill", "Title 4", "Subtitle", "R$800,00")
+        FinancialTransaction(title: "Teste", amount: 20.0, type: TransactionType.expense, category: TransactionCategory.education),
+        FinancialTransaction(title: "Teste 2", amount: 30.0, type: TransactionType.income, category: TransactionCategory.education)
     ]
     
     func formattedNumber (_ number: Double) -> String {
@@ -163,41 +161,13 @@ struct ExpensesView: View {
                         .padding()
                         
                         LazyVStack(spacing: 0){
-                            ForEach(transactions.indices, id: \.self) { index in
-                            let transaction = transactions[index]
-                                HStack(spacing: 12){
-                                    Image(systemName: transaction.0)
-                                        .foregroundStyle(Color("Accent"))
-                                        .frame(width: 32, height: 32)
-                                        .background(Color("Accent").opacity(0.15))
-                                        .clipShape(Circle())
-                                    
-                                    VStack(alignment: .leading, spacing: 3) {
-                                        Text(transaction.1)
-                                            .font(.headline)
-                                            .lineLimit(1)
-                                            .foregroundStyle(Color("Foreground"))
-                                        Text(transaction.2)
-                                            .font(.subheadline)
-                                            .lineLimit(1)
-                                            .foregroundStyle(Color("TextMuted"))
-                                            
-                                    }
-                                    
-                                    Spacer(minLength: 12)
-                                    
-                                    Text(transaction.3)
-                                        .fontWeight(.bold)
-                                        .foregroundStyle(Color("Foreground"))
-                                        .lineLimit(1)
-                                }
-                                .padding(.horizontal, 16)
-                                .padding(.vertical, 14)
+                            ForEach(transactions.indices, id: \.self) { transaction in
+                                TransactionRow(transaction: transactions[transaction])
                                 
-                                if index < transactions.count - 1 {
+                                if transaction != transactions.indices.last {
                                     Divider()
                                         .overlay(Color("Border"))
-                                        .padding(.leading, 60)
+                                        .padding()
                                 }
                             }
                             
