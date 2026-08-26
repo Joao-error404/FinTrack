@@ -55,32 +55,7 @@ struct ExpensesView: View {
                                 color: Color("Error"))
                         }
                         
-                        HStack(spacing: 0) {
-                            ForEach(tabs.indices, id: \.self) { index in
-                                Button {
-                                    withAnimation {
-                                        selectedTab = index
-                                    }
-                                } label: {
-                                    Text(tabs[index])
-                                        .fontWeight(.semibold)
-                                        .foregroundStyle(selectedTab == index ? Color("Foreground") : Color("TextMuted"))
-                                        .frame(maxWidth: .infinity)
-                                        .padding(.vertical, 4)
-                                        .background(selectedTab == index ? Color("Accent") : Color.clear)
-                                        .clipShape(Capsule())
-                                }
-                            }
-                        }
-                        .frame(maxWidth: .infinity)
-                        .padding(4)
-                        .background(Color("Surface"))
-                        .clipShape(Capsule())
-                        .overlay {
-                            Capsule()
-                                .stroke(Color("Border"), lineWidth: 1)
-                        }
-                        .padding()
+                        TransactionsFilterTab(tabs: tabs, selectedTab: $selectedTab)
                         
                         LazyVStack(spacing: 0){
                             ForEach(transactions.indices, id: \.self) { transaction in
