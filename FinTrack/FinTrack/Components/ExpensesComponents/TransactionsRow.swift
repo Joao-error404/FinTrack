@@ -32,7 +32,7 @@ struct TransactionsRow: View {
             
             Spacer(minLength: 12)
             
-            Text(transaction.amount.formatted(.currency(code: Locale.current.currency?.identifier ?? "BRL")))
+            Text(transaction.amount.formattedCurrency)
                 .fontWeight(.bold)
                 .foregroundStyle(Color("Foreground"))
                 .lineLimit(1)
