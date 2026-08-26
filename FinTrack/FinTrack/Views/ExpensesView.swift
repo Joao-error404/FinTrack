@@ -37,8 +37,6 @@ extension View {
 struct ExpensesView: View {
     @State private var totalEarnings = 0.0
     @State private var totalExpenses = 0.0
-    @State private var actualMonth = currentMonth
-    
     @State private var selectedTab = 0
     
     let tabs = [
@@ -53,16 +51,6 @@ struct ExpensesView: View {
         ("car.fill", "Title 3", "Subtitle", "R$150,00"),
         ("house.fill", "Title 4", "Subtitle", "R$800,00")
     ]
-    
-    
-    static var currentMonth: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US")
-        dateFormatter.dateFormat = "MMMM"
-        
-        let monthName = dateFormatter.string(from: Date())
-        return monthName
-    }
     
     func formattedNumber (_ number: Double) -> String {
         let currencyCode = Locale.current.currency?.identifier ?? "BRL"
@@ -86,7 +74,7 @@ struct ExpensesView: View {
                             .foregroundStyle(Color("Foreground"))
                             .font(.title)
                             .fontWeight(.bold)
-                        Text("\(transactions.count) transactions - \(actualMonth)")
+                        Text("\(transactions.count) transactions - \(Date.currentMonthName)")
                             .foregroundStyle(Color("TextMuted"))
                             .font(.footnote)
                     }
