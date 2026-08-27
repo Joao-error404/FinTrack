@@ -9,13 +9,28 @@ import SwiftUI
 
 struct TransactionsList: View {
     let transactions: [FinancialTransaction]
+    @Binding var selectedTab: Int
+    
+    var filteredTransactions: [FinancialTransaction] {
+    switch selectedTab {
+    case 1:
+        return transactions.filter { $0.type == .income }
+
+    case 2:
+        return transactions.filter { $0.type == .expense }
+
+    default:
+        return transactions
+    }
+}
+
     
     var body: some View {
         LazyVStack(spacing: 0){
-            ForEach(transactions) { transaction in
+            ForEach(filteredTransactions) { transaction in
                 TransactionsRow(transaction: transaction)
                 
-                if transaction != transactions.last {
+                if transaction.id != transactions.last?.id {
                     Divider()
                         .overlay(Color("Border"))
                         .padding(.horizontal, 20)
