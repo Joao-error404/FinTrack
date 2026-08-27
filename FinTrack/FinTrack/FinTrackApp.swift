@@ -26,9 +26,14 @@ struct FinTrackApp: App {
                         Label("Transactions", systemImage: "wallet.bifold")
                     }
                     .tag("transactions")
+                GoalsView()
+                    .tabItem {
+                        Label("Goals", systemImage: "target")
+                    }
+                    .tag("goals")
             }
             .preferredColorScheme(.dark)
         }
-        .modelContainer(for: FinancialTransaction.self)
+        .modelContainer(for: [FinancialTransaction.self, Goal.self])
     }
 }
