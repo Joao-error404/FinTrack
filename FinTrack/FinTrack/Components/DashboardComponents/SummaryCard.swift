@@ -11,27 +11,39 @@ struct SummaryCard: View {
 
     let icon: String
     let title: String
-    let value: String
+    let value: Double
     let color: Color
 
     var body: some View {
 
         VStack(alignment: .leading, spacing: 12) {
 
-            Image(systemName: icon)
-                .foregroundColor(color)
+            ZStack {
+                Circle()
+                    .fill(color.opacity(0.2))
+                    .frame(width: 45, height: 45)
+
+                Image(systemName: icon)
+                    .foregroundStyle(color)
+            }
 
             Text(title)
-                .foregroundColor(Color("TextMuted"))
+                .font(.subheadline)
+                .foregroundStyle(Color("TextMuted"))
 
-            Text(value)
+            Text(value.formattedCurrency)
                 .font(.title3)
-                .bold()
-                .foregroundColor(.white)
+                .fontWeight(.bold)
+                .foregroundStyle(.white)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color("Surface"))
-        .cornerRadius(24)
+        .background(Color("CardBackground"))
+        .clipShape(
+            RoundedRectangle(
+                cornerRadius: 24,
+                style: .continuous
+            )
+        )
     }
 }

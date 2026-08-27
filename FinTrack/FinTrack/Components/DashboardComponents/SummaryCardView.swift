@@ -9,6 +9,10 @@ import SwiftUI
 
 struct SummaryCardsView: View {
 
+    let balance: Double
+    let income: Double
+    let expense: Double
+    
     var body: some View {
 
         HStack(spacing: 16) {
@@ -16,21 +20,21 @@ struct SummaryCardsView: View {
             SummaryCard(
                 icon: "arrow.up.right",
                 title: "Saldo líquido",
-                value: "R$ 6.8k",
+                value: balance,
                 color: Color("Accent")
             )
 
             SummaryCard(
                 icon: "arrow.down.right",
                 title: "Total gastos",
-                value: "R$ 3.8k",
+                value: expense,
                 color: Color("Error")
             )
 
             SummaryCard(
                 icon: "chart.line.uptrend.xyaxis",
                 title: "Entradas",
-                value: "R$ 10.6k",
+                value: income,
                 color: Color("Success")
             )
         }

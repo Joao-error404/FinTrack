@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct RecentTransactionsView: View {
+    
+    let transactions: [FinancialTransaction]
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -27,41 +29,34 @@ struct RecentTransactionsView: View {
                 .foregroundColor(Color("Accent"))
             }
             
-                VStack(spacing: 0) {
-                    
-                    TransactionRowView(
-                        icon: "car.fill",
-                        title: "Assado",
-                        subtitle: "Transporte",
-                        value: "-R$ 123,12",
-                        color: Color("Error")
-                    )
-                    
-                    Divider()
-                    
-                    TransactionRowView(
-                        icon: "graduationcap.fill",
-                        title: "Curso TypeScript",
-                        subtitle: "Educação",
-                        value: "-R$ 197,00",
-                        color: Color("Error")
-                    )
-                    
-                    Divider()
-                    
-                    TransactionRowView(
-                        icon: "chart.line.uptrend.xyaxis",
-                        title: "Dividendos",
-                        subtitle: "Investimentos",
-                        value: "+R$ 340,00",
-                        color: Color("Success")
-                    )
-                }
-                .padding()
-                .background(Color.white.opacity(0.05))
-                .cornerRadius(24)
-            
-            
+                   if transactions.isEmpty {
+                       ContentUnavailableView(
+                        "Nenhuma transação recente",
+                        systemImage: "tray",
+                        description: Text("Clique no botão + para adicionar uma transação.")
+                       ).foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                       
+                        .background(Color.white.opacity(0.05))
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                       
+                   }else{
+                       
+                       VStack(spacing: 0) {
+                           ForEach(transactions){ transaction in TransactionsRow(transaction: transaction)
+                               
+                               if transaction.id != transactions.last?.id{
+                                   Divider()
+                                   
+                                       .overlay(Color.white.opacity(0.1))
+                                       }
+                               }
+                       }
+                       .padding()
+                       .background(Color.white.opacity(0.05))
+                       .clipShape(RoundedRectangle(cornerRadius: 24))
+                       }
         }
     }
 }
