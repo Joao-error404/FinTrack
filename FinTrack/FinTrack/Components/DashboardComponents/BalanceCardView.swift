@@ -8,7 +8,18 @@
 import SwiftUI
 
 struct BalanceCardView: View {
+    
+    let balance: Double
+    let income: Double
+    let expense: Double
 
+    private var percent: Double {
+        let max = income + expense
+        let divisivel = balance * 100
+        let result = (divisivel / max)
+        return result
+    }
+    
     var body: some View {
 
         VStack(alignment: .leading, spacing: 18) {
@@ -16,11 +27,11 @@ struct BalanceCardView: View {
             Text("Saldo atual")
                 .font(.headline)
 
-            Text("R$ 6.809,88")
+            Text(balance.formattedCurrency)
                 .font(.system(size: 42, weight: .bold))
 
             HStack {
-                Text("64%")
+                Text("\(percent.formattedCurrency)%")
                     .padding(.horizontal, 12)
                     .padding(.vertical, 6)
                     .background(.white.opacity(0.25))
@@ -38,7 +49,7 @@ struct BalanceCardView: View {
                     Text("Receitas")
                         .foregroundColor(.white.opacity(0.8))
 
-                    Text("R$ 10.6k")
+                    Text(income.formattedCurrency)
                         .font(.title3)
                         .bold()
                 }
@@ -50,7 +61,7 @@ struct BalanceCardView: View {
                     Text("Despesas")
                         .foregroundColor(.white.opacity(0.8))
 
-                    Text("R$ 3.8k")
+                    Text(expense.formattedCurrency)
                         .font(.title3)
                         .bold()
                 }

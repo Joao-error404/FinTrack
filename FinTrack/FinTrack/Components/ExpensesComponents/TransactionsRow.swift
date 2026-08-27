@@ -27,15 +27,23 @@ struct TransactionsRow: View {
                     .font(.subheadline)
                     .lineLimit(1)
                     .foregroundStyle(Color("TextMuted"))
-                    
+                
             }
             
             Spacer(minLength: 12)
-            
-            Text(transaction.amount.formattedCurrency)
-                .fontWeight(.bold)
-                .foregroundStyle(Color("Foreground"))
-                .lineLimit(1)
+            if(transaction.type == .income){
+                Text("+\(transaction.amount.formattedCurrency)")
+                    .fontWeight(.bold)
+                    .lineLimit(1)
+                    .foregroundColor(Color.green)
+            }else {
+                if(transaction.type == .expense){
+                    Text("-\(transaction.amount.formattedCurrency)")
+                        .fontWeight(.bold)
+                        .lineLimit(1)
+                        .foregroundColor(Color.red)
+                }
+            }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 14)

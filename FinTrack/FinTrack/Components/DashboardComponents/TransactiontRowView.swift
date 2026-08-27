@@ -4,44 +4,53 @@
 //
 //  Created by j.de.oliveira.neto on 24/08/26.
 //
-
 import SwiftUI
 
 struct TransactionRowView: View {
 
-    let icon: String
-    let title: String
-    let subtitle: String
-    let value: String
-    let color: Color
+    let transaction: FinancialTransaction
+
+    private var transactionColor: Color {
+        transaction.type == .income ? .green : .red
+    }
+
+    private var valuePrefix: String {
+        transaction.type == .income ? "+" : "-"
+    }
 
     var body: some View {
-
-        HStack {
-
+        HStack(spacing: 14) {
             Circle()
-                .fill(Color("Accent").opacity(0.2))
+                .fill(transactionColor.opacity(0.15))
                 .frame(width: 50, height: 50)
-                .overlay(
-                    Image(systemName: icon)
-                        .foregroundColor(Color("Accent"))
+                .overlay {
+                    Image(systemName: transaction.category.icon)
+                        .foregroundStyle(transactionColor)
+                }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(transaction.title)
+                    .foregroundStyle(.white)
+                    .fontWeight(.semibold)
+
+                Text(
+                    "\(transaction.category.title) · "
+                    + transaction.date.formatted(
+                        date: .abbreviated,
+                        time: .omitted
+                    )
                 )
-
-            VStack(alignment: .leading) {
-
-                Text(title)
-                    .foregroundColor(.white)
-                    .bold()
-
-                Text(subtitle)
-                    .foregroundColor(Color("TextMuted"))
+                .foregroundStyle(.gray)
+                .font(.subheadline)
             }
 
             Spacer()
 
-            Text(value)
-                .foregroundColor(color)
-                .bold()
+            Text(
+                "\(valuePrefix)\(transaction.amount.formattedCurrency)"
+            )
+            .foregroundStyle(transactionColor)
+            .fontWeight(.bold)
         }
         .padding(.vertical, 12)
     }

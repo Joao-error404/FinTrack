@@ -21,6 +21,13 @@ struct FinTrackApp: App {
                         Label("Dashboard", systemImage: "house.fill")
                     }
                     .tag("dashboard")
+                
+                AddTransactionView(selectedTab: $selectedTab)
+                    .tabItem {
+                        Label("Add", systemImage: "plus.circle.fill")
+                    }
+                    .tag("add")
+                
                 ExpensesView()
                     .tabItem {
                         Label("Transactions", systemImage: "wallet.bifold")
