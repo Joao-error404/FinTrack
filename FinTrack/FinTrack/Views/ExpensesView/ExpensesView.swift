@@ -6,11 +6,31 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct ExpensesView: View {
-    @StateObject private var viewModel = ExpensesViewModel()
+    
     @State private var selectedTab = 0
     
+    @Query(sort: \FinancialTransaction.date, order: .reverse)
+    
+    private var transactions: [FinancialTransaction]
+    
+    private var totalIncome: Double {
+        transactions.filter{ $0.type == .income}
+            .reduce(0){ result, transaction
+                in
+                    result + transaction.amount
+            }
+    }
+    
+    private var totalExpense: Double {
+        transactions.filter{ $0.type == .expense}
+            .reduce(0){ result, transaction
+                in
+                    result + transaction.amount
+            }
+    }
     var body: some View {
         NavigationStack {
             ZStack {
@@ -18,26 +38,26 @@ struct ExpensesView: View {
                     .ignoresSafeArea()
                 ScrollView {
                     
-                    TransactionsHeader(transactionCount: viewModel.transactions.count)
+                    TransactionsHeader(transactionCount: transactions.count)
                     
                     VStack {
                         HStack{
                             TransactionsSummaryCard(
                                 title: "Incomes",
-                                amount: viewModel.totalIncomes,
+                                amount: totalIncome,
                                 icon: "arrow.up.right",
                                 color: Color("Success"))
                             
                             TransactionsSummaryCard(
                                 title: "Expenses",
-                                amount: viewModel.totalExpenses,
+                                amount: totalExpense,
                                 icon: "arrow.down.right",
                                 color: Color("Error"))
                         }
                         
                         TransactionsFilterTab(selectedTab: $selectedTab)
                         
-                        TransactionsList(transactions: viewModel.transactions)
+                        TransactionsList(transactions: transactions, selectedTab: $selectedTab)
                     }
                     
                 }

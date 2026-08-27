@@ -27,7 +27,7 @@ struct HeaderView: View {
             Button{
                 
             } label: {
-                Image(systemName: "Bell")
+                Image(systemName: "Bell.fill")
                     .foregroundColor(.white)
                     .font(.title2)
                     .padding()
