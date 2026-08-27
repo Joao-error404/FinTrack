@@ -12,13 +12,7 @@ struct GoalsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \Goal.deadline) private var goals: [Goal]
     
-    let cardColors: [(color: Color, darker: Color)] = [
-        (Color("Accent"), .purple),
-        (.blue, .cyan),
-        (.green, .mint),
-        (.orange, .red),
-        (.pink, .purple)
-    ]
+    @State private var showingAddGoal = false
     
     var body: some View {
         NavigationStack {
@@ -32,15 +26,26 @@ struct GoalsView: View {
                         GoalsProgressCard()
                         
                         LazyVStack (spacing: 16) {
-                            ForEach(cardColors.indices, id: \.self) { index in
-                                let colors = cardColors[index]
-                                GoalCard(color: colors.color, colorDarker: colors.darker)
+                            ForEach(goals, id: \.id) { goal in
+                                GoalCard(goal: goal)
                             }
                         }
                         
                     }
                     .padding(.horizontal)
                 }
+            }
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        showingAddGoal = true
+                    } label: {
+                        Image(systemName: "plus")
+                    }
+                }
+            }
+            .sheet(isPresented: $showingAddGoal) {
+                AddGoalView()
             }
         }
     }

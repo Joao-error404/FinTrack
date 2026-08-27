@@ -8,40 +8,45 @@
 import SwiftUI
 
 struct GoalCard: View {
-    let color: Color
-    let colorDarker: Color
+    let goal: Goal
     
     var body: some View {
         HStack (spacing: 40){
             
-            Image(systemName: "shield")
+            Image(systemName: goal.icon)
                 .font(.system(size: 30))
-                .foregroundStyle(color)
+                .foregroundStyle(goal.goalColor.color)
             
             VStack {
                 VStack (alignment: .leading) {
                     HStack {
-                        Text("Emergency Fund")
+                        Text(goal.title)
                             .foregroundStyle(Color("Foreground"))
                             .fontWeight(.bold)
                         
                         Spacer()
                         
-                        Text("39%")
-                            .foregroundStyle(color)
+                        Text("\(goal.progress * 100, format: .number)%")
+                            .foregroundStyle(goal.goalColor.color)
                             .fontWeight(.bold)
                     }
-                    Text("Deadline: Dec 2026")
-                        .foregroundStyle(Color("TextMuted"))
+                    
+                    if let deadline = goal.deadline {
+                        Text("Deadline: \(deadline.formatted(date: .abbreviated, time: .omitted))")
+                            .foregroundStyle(Color("TextMuted"))
+                    } else {
+                        Text("No deadline.")
+                            .foregroundStyle(Color("TextMuted"))
+                    }
                     
                 }
                 
-                ProgressView(value: 0.5)
+                ProgressView(value: goal.progress)
                     .tint(
                         LinearGradient(
                             colors: [
-                                color,
-                                colorDarker
+                                goal.goalColor.color,
+                                goal.goalColor.darkerColor
                             ],
                             startPoint: .leading,
                             endPoint: .trailing
@@ -52,18 +57,18 @@ struct GoalCard: View {
                 
                 VStack (alignment: .leading){
                     HStack (){
-                        Text("$43.8k")
+                        Text(goal.currentAmount.formattedCurrency)
                         
                         Spacer()
                         
-                        Text("/ $100k")
+                        Text("/ \(goal.targetAmount.formattedCurrency)")
                     }
                     .foregroundStyle(Color("TextMuted"))
                     
                     HStack {
                         Text("Remaining")
                             .foregroundStyle(Color("TextMuted"))
-                        Text("$56,2k")
+                        Text(goal.remainingAmount.formattedCurrency)
                             .foregroundStyle(Color("Foreground"))
                             .fontWeight(.bold)
                     }
@@ -77,5 +82,5 @@ struct GoalCard: View {
 }
 
 #Preview {
-    GoalCard(color: Color("Accent"), colorDarker: Color.purple)
+    GoalCard(goal: Goal(id: UUID(), title: "Viagem", deadline: DateFormatter().date(from: "2029-01-01"), targetAmount: 100_000, currentAmount: 50_000, createdAt: .now, icon: "airplane"))
 }
