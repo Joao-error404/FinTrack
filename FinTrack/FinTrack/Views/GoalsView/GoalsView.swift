@@ -19,7 +19,11 @@ struct GoalsView: View {
                     .ignoresSafeArea(edges: .all)
                 
                 ScrollView {
-                    GoalsHeader(totalGoals: goals.count)
+                    VStack (spacing: 24) {
+                        GoalsHeader(totalGoals: goals.count)
+                        GoalsProgressCard()
+                    }
+                    .padding(.horizontal)
                 }
             }
         }

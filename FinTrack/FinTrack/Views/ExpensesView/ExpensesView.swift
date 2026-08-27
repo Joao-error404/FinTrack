@@ -17,28 +17,30 @@ struct ExpensesView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 ScrollView {
-                    
-                    TransactionsHeader(transactionCount: viewModel.transactions.count)
-                    
                     VStack {
-                        HStack{
-                            TransactionsSummaryCard(
-                                title: "Incomes",
-                                amount: viewModel.totalIncomes,
-                                icon: "arrow.up.right",
-                                color: Color("Success"))
+                        TransactionsHeader(transactionCount: viewModel.transactions.count)
+                        
+                        VStack {
+                            HStack{
+                                TransactionsSummaryCard(
+                                    title: "Incomes",
+                                    amount: viewModel.totalIncomes,
+                                    icon: "arrow.up.right",
+                                    color: Color("Success"))
+                                
+                                TransactionsSummaryCard(
+                                    title: "Expenses",
+                                    amount: viewModel.totalExpenses,
+                                    icon: "arrow.down.right",
+                                    color: Color("Error"))
+                            }
                             
-                            TransactionsSummaryCard(
-                                title: "Expenses",
-                                amount: viewModel.totalExpenses,
-                                icon: "arrow.down.right",
-                                color: Color("Error"))
+                            TransactionsFilterTab(selectedTab: $selectedTab)
+                            
+                            TransactionsList(transactions: viewModel.transactions)
                         }
-                        
-                        TransactionsFilterTab(selectedTab: $selectedTab)
-                        
-                        TransactionsList(transactions: viewModel.transactions)
                     }
+                    .padding(.horizontal)
                     
                 }
             }
