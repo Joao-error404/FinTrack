@@ -75,11 +75,12 @@ struct AddGoalView: View {
         let goal = Goal(
             id: UUID(),
             title: title.trimmingCharacters(in: .whitespacesAndNewlines),
+            deadline: hasDeadline ? deadline : nil,
             targetAmount: targetAmount,
             currentAmount: currentAmount,
             createdAt: .now,
             icon: icon,
-            colorName: colorName
+            colorName: colorName,
         )
         modelContext.insert(goal)
         

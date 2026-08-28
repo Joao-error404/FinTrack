@@ -23,7 +23,7 @@ struct GoalsView: View {
                 ScrollView {
                     VStack (spacing: 24) {
                         GoalsHeader(totalGoals: goals.count)
-                        GoalsProgressCard()
+                        GoalsProgressCard(goals: goals)
                         
                         LazyVStack (spacing: 16) {
                             ForEach(goals, id: \.id) { goal in

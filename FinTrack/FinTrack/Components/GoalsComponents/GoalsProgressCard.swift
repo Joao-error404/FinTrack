@@ -8,6 +8,25 @@
 import SwiftUI
 
 struct GoalsProgressCard: View {
+    let goals: [Goal]
+    
+    private var totalTargetAmount: Double {
+        goals.reduce(0) { partialResult, goal in
+            partialResult + goal.targetAmount
+        }
+    }
+    
+    private var totalCurrentAmount: Double {
+        goals.reduce(0) { partialResult, goal in
+            partialResult + goal.currentAmount
+        }
+    }
+
+    private var overallProgress: Double {
+        guard totalTargetAmount > 0 else { return 0 }
+        return min(totalCurrentAmount / totalTargetAmount, 1)
+    }
+    
     var body: some View {
         VStack (alignment: .leading){
             HStack () {
@@ -16,7 +35,7 @@ struct GoalsProgressCard: View {
 
                 Spacer()
 
-                Text("39%")
+                Text(overallProgress, format: .percent.precision(.fractionLength(0)))
                     .foregroundStyle(Color("Accent"))
             }
             .padding(.horizontal, 4)
@@ -24,7 +43,7 @@ struct GoalsProgressCard: View {
             .lineLimit(1)
             
             
-            ProgressView(value: 0.5)
+            ProgressView(value: overallProgress)
                 .tint(
                     LinearGradient(
                         colors: [
@@ -39,11 +58,11 @@ struct GoalsProgressCard: View {
                 .scaleEffect(y: 2, anchor: .center)
             
             HStack (){
-                Text("$43.8k")
+                Text(totalCurrentAmount.formattedCurrency)
                 
                 Spacer()
                 
-                Text("of $100k")
+                Text("of \(totalTargetAmount.formattedCurrency)")
             }
             .foregroundStyle(Color("TextMuted"))
         }
@@ -54,5 +73,26 @@ struct GoalsProgressCard: View {
 }
 
 #Preview {
-    GoalsProgressCard()
+    GoalsProgressCard(
+            goals: [
+                Goal(
+                    id: UUID(),
+                    title: "Viagem",
+                    targetAmount: 10_000,
+                    currentAmount: 4_000,
+                    createdAt: .now,
+                    icon: "airplane"
+                ),
+                Goal(
+                    id: UUID(),
+                    title: "Emergencia",
+                    targetAmount: 5_000,
+                    currentAmount: 2_500,
+                    createdAt: .now,
+                    icon: "cross.case"
+                )
+            ]
+        )
+        .padding()
+        .background(Color("Background"))
 }
