@@ -58,6 +58,8 @@ struct GoalCard: View {
                 VStack (alignment: .leading){
                     HStack (){
                         Text(goal.currentAmount.formattedCurrency)
+                            .fontWeight(.bold)
+                            .foregroundStyle(Color("Foreground"))
                         
                         Spacer()
                         
@@ -67,11 +69,9 @@ struct GoalCard: View {
                     
                     HStack {
                         Text("Remaining")
-                            .foregroundStyle(Color("TextMuted"))
                         Text(goal.remainingAmount.formattedCurrency)
-                            .foregroundStyle(Color("Foreground"))
-                            .fontWeight(.bold)
                     }
+                    .foregroundStyle(Color("TextMuted"))
                 }
             }
         }
