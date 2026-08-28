@@ -37,7 +37,6 @@ struct ExpensesView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 ScrollView {
-                    
                     TransactionsHeader(transactionCount: transactions.count)
                     
                     VStack {
@@ -59,6 +58,7 @@ struct ExpensesView: View {
                         
                         TransactionsList(transactions: transactions, selectedTab: $selectedTab)
                     }
+                    .padding(.horizontal)
                     
                 }
             }
