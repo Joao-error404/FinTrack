@@ -23,6 +23,8 @@ struct AddGoalView: View {
     @State private var showError = false
     @State private var errorMessage = ""
     
+    @FocusState private var textFieldFocused: Bool
+    
     private var isFormValid: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         && targetAmount > 0
@@ -36,18 +38,19 @@ struct AddGoalView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 
-                VStack {
-                    GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount)
-                    
-                    DeadlineSection(hasDeadline: $hasDeadline, deadline: $deadline)
-                    
-                    AppearenceSection(icon: $icon, colorName: $colorName)
-                    
-                    AddGoalButton(isFormValid: isFormValid, action: saveGoal)
+                ScrollView {
+                    VStack (spacing:16){
+                        GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount, isFocused: $textFieldFocused)
+                        
+                        DeadlineSection(hasDeadline: $hasDeadline, deadline: $deadline)
+                        
+                        AppearenceSection(icon: $icon, colorName: $colorName)
+                        
+                        AddGoalButton(isFormValid: isFormValid, action: saveGoal)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.horizontal)
-                
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {

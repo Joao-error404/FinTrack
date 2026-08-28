@@ -11,6 +11,7 @@ struct GoalSection: View {
     @Binding var title: String
     @Binding var targetAmount: Double
     @Binding var currentAmount: Double
+    @FocusState.Binding var isFocused: Bool
     
     var body: some View {
         VStack (){
@@ -26,6 +27,7 @@ struct GoalSection: View {
                           prompt: Text("Ex.: Travel")
                     .foregroundStyle(Color("TextMuted")))
                 .textFieldModifier()
+                .focused($isFocused)
             }
             
             VStack (alignment: .leading, spacing: 2) {
@@ -38,6 +40,7 @@ struct GoalSection: View {
                 .keyboardType(.decimalPad)
                 .foregroundStyle(Color("Foreground"))
                 .textFieldModifier()
+                .focused($isFocused)
             }
             
             VStack (alignment: .leading, spacing: 2){
@@ -48,11 +51,20 @@ struct GoalSection: View {
                     .keyboardType(.decimalPad)
                     .foregroundStyle(Color("Foreground"))
                     .textFieldModifier()
+                    .focused($isFocused)
             }
         }
         .padding()
         .frame(maxWidth: .infinity, maxHeight: 250)
         .frameStyle()
+        .toolbar {
+            ToolbarItemGroup(placement: .keyboard) {
+                Spacer()
+                Button("Done") {
+                    isFocused = false
+                }
+            }
+        }
     }
 }
 
@@ -60,5 +72,6 @@ struct GoalSection: View {
     @Previewable @State var title: String = ""
     @Previewable @State var targetAmount: Double = 0.0
     @Previewable @State var currentAmount: Double = 0.0
-    GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount)
+    @Previewable @FocusState var isFocused: Bool
+    GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount, isFocused: $isFocused)
 }
