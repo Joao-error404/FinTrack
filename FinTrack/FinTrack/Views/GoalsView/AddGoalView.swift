@@ -16,7 +16,7 @@ struct AddGoalView: View {
     @State private var targetAmount = 0.0
     @State private var currentAmount = 0.0
     @State private var deadline = Date()
-    @State private var hasDeadline = true
+    @State private var hasDeadline = false
     @State private var icon = "target"
     @State private var colorName = GoalColor.accent.rawValue
     
@@ -30,86 +30,36 @@ struct AddGoalView: View {
         && currentAmount <= targetAmount
     }
     
-    private let icons = [
-        "target",
-        "house.fill",
-        "car.fill",
-        "airplane",
-        "graduationcap.fill",
-        "heart.fill",
-        "star.fill",
-        "gift.fill",
-        "briefcase.fill"
-    ]
-    
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Goal") {
-                    TextField("Goal's name", text: $title)
-                    TextField("Target amount", value: $targetAmount, format: .currency(code: Locale.current.currency?.identifier ?? "BRL"))
-                        .keyboardType(.decimalPad)
-                    TextField("Current amount", value: $currentAmount, format: .currency(code: Locale.current.currency?.identifier ?? "BRL"))
-                        .keyboardType(.decimalPad)
-                    
-                }
+            ZStack (alignment: .top){
+                Color("Background")
+                    .ignoresSafeArea()
                 
-                Section("Deadline") {
-                    Toggle("Set deadline", isOn: $hasDeadline)
+                VStack {
+                    GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount)
                     
-                    if hasDeadline {
-                        DatePicker("Deadline", selection: $deadline, displayedComponents: .date)
-                    }
-                }
-                
-                Section("Appearance") {
-                    Picker("Icon", selection: $icon) {
-                        ForEach(icons, id: \.self) { iconName in
-                            Label(iconName, systemImage: iconName)
-                                .tag(iconName)
-                        }
-                    }
+                    DeadlineSection(hasDeadline: $hasDeadline, deadline: $deadline)
                     
-                    HStack {
-                            Text("Color")
-                            Spacer()
-
-                            ForEach(GoalColor.allCases) { goalColor in
-                                Button {
-                                    colorName = goalColor.rawValue
-                                } label: {
-                                    Circle()
-                                        .fill(goalColor.color)
-                                        .frame(width: 28, height: 28)
-                                        .overlay {
-                                            if colorName == goalColor.rawValue {
-                                                Image(systemName: "checkmark")
-                                                    .font(.caption.bold())
-                                                    .foregroundStyle(.white)
-                                            }
-                                        }
-                                }
-                                .buttonStyle(.plain)
-                                .accessibilityLabel(goalColor.rawValue)
-                            }
-                        }
+                    AppearenceSection(icon: $icon, colorName: $colorName)
+                    
+                    AddGoalButton(isFormValid: isFormValid, action: saveGoal)
                 }
+                .frame(maxWidth: .infinity)
+                .padding(.horizontal)
                 
-                Section {
-                    Button("Add goal") {
-                        saveGoal()
-                    }
-                    .frame(maxWidth: .infinity)
-                    .disabled(!isFormValid)
-                }
             }
-            .navigationTitle("New goal")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Cancel") {
                         dismiss()
                     }
+                }
+                ToolbarItem(placement: .principal) {
+                    Text("Add goal")
+                        .foregroundStyle(Color("Foreground"))
+                        .font(.headline)
+                        .fontWeight(.bold)
                 }
             }
             .alert("Error", isPresented: $showError) {
@@ -117,6 +67,7 @@ struct AddGoalView: View {
             } message: {
                 Text(errorMessage)
             }
+            
         }
     }
     
