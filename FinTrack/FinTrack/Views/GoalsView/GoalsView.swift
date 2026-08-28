@@ -20,20 +20,37 @@ struct GoalsView: View {
                 Color("Background")
                     .ignoresSafeArea(edges: .all)
                 
-                ScrollView {
-                    VStack (spacing: 24) {
-                        GoalsHeader(totalGoals: goals.count)
-                        GoalsProgressCard(goals: goals)
-                        
-                        LazyVStack (spacing: 16) {
-                            ForEach(goals, id: \.id) { goal in
-                                GoalCard(goal: goal)
+                List {
+                    GoalsHeader(totalGoals: goals.count)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                    
+                    GoalsProgressCard(goals: goals)
+                        .listRowBackground(Color.clear)
+                        .listRowSeparator(.hidden)
+                        .listRowInsets(EdgeInsets())
+                        .padding(.top, 20)
+
+                    ForEach(goals, id: \.id) { goal in
+                        GoalCard(goal: goal)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .swipeActions(edge: .trailing) {
+                                Button(role: .destructive) {
+                                    deleteGoal(goal)
+                                } label: {
+                                    Label("Excluir", systemImage: "trash")
+                                }
                             }
-                        }
-                        
+                            .listRowInsets(EdgeInsets())
+                            .padding(.top)
+
                     }
-                    .padding(.horizontal)
                 }
+                .listStyle(.plain)
+                .scrollContentBackground(.hidden)
+                .padding(.horizontal)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
@@ -47,6 +64,17 @@ struct GoalsView: View {
             .sheet(isPresented: $showingAddGoal) {
                 AddGoalView()
             }
+        }
+        
+    }
+    
+    private func deleteGoal(_ goal: Goal) {
+        modelContext.delete(goal)
+
+        do {
+            try modelContext.save()
+        } catch {
+            print("Erro ao excluir meta: \(error.localizedDescription)")
         }
     }
 }
