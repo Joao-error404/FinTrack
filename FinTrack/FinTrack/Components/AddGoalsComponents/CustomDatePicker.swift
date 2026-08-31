@@ -34,27 +34,8 @@ struct CustomDatePicker: View {
             .clipShape(RoundedRectangle(cornerRadius: 12))
         }
         .sheet(isPresented: $showDatePicker) {
-            VStack {
-                DatePicker(
-                    "",
-                    selection: $selectedDate,
-                    in: Date()...,
-                    displayedComponents: .date
-                )
-                .datePickerStyle(.graphical)
-                .tint(Color("Accent"))
-
-                Button("Done") {
-                    showDatePicker = false
-                }
-                .tint(Color("Accent"))
-                .buttonStyle(.borderedProminent)
-                
-            }
-            .padding()
+            DatePickerSheet(date: $selectedDate, isPresented: $showDatePicker, dateRange: Date()...)
         }
-
-            
     }
 }
 

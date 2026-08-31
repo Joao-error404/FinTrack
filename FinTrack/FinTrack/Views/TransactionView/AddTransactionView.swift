@@ -21,6 +21,7 @@ struct AddTransactionView: View {
     @State private var amount = 0.0
     @State private var type: TransactionType = .expense
     @State private var category: TransactionCategory = .other
+    @State private var date: Date = .now
 
     private var isFormValid: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -33,9 +34,11 @@ struct AddTransactionView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 
+                
                     VStack (spacing: 16){
                         TransactionTypeSelector(type: $type)
                         TransactionAmountInput(amount: $amount)
+                        TransactionDateInput(date: $date)
                     }
                     .padding(.top, 70)
                     .padding(.horizontal)
@@ -70,6 +73,7 @@ struct AddTransactionView: View {
         let transaction = FinancialTransaction(
             title: trimmedTitle,
             amount: amount,
+            date: date,
             type: type,
             category: category
         )
