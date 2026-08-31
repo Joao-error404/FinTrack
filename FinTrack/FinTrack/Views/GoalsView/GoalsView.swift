@@ -16,7 +16,7 @@ struct GoalsView: View {
     
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack (alignment: .topTrailing){
                 Color("Background")
                     .ignoresSafeArea(edges: .all)
                 
@@ -51,15 +51,18 @@ struct GoalsView: View {
                 .listStyle(.plain)
                 .scrollContentBackground(.hidden)
                 .padding(.horizontal)
-            }
-            .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        showingAddGoal = true
-                    } label: {
-                        Image(systemName: "plus")
-                    }
+                
+                Button {
+                    showingAddGoal = true
+                } label: {
+                    Image(systemName: "plus")
+                                .font(.body)
+                                .foregroundStyle(Color("PrimaryForeground"))
+                                .frame(width: 46, height: 46)
+                                .background(Color("Primary"))
+                                .clipShape(Circle())
                 }
+                .padding()
             }
             .sheet(isPresented: $showingAddGoal) {
                 AddGoalView()
