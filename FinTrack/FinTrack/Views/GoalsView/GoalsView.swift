@@ -52,17 +52,7 @@ struct GoalsView: View {
                 .scrollContentBackground(.hidden)
                 .padding(.horizontal)
                 
-                Button {
-                    showingAddGoal = true
-                } label: {
-                    Image(systemName: "plus")
-                                .font(.body)
-                                .foregroundStyle(Color("PrimaryForeground"))
-                                .frame(width: 46, height: 46)
-                                .background(Color("Primary"))
-                                .clipShape(Circle())
-                }
-                .padding()
+                CircleAddGoalButton(showingAddGoal: $showingAddGoal)
             }
             .sheet(isPresented: $showingAddGoal) {
                 AddGoalView()
