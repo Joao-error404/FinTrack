@@ -29,14 +29,18 @@ struct AddTransactionView: View {
 
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack (alignment: .top){
                 Color("Background")
                     .ignoresSafeArea()
                 
-                ScrollView {
-                    TransactionTypeSelector(type: $type)
-                }
-                .padding(.horizontal)
+                    VStack (spacing: 16){
+                        TransactionTypeSelector(type: $type)
+                        TransactionAmountInput(amount: $amount)
+                    }
+                    .padding(.top, 70)
+                    .padding(.horizontal)
+                    .ignoresSafeArea(.container, edges: .top)
+                    .frame(maxWidth: .infinity)
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
