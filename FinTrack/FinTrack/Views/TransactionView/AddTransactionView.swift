@@ -34,11 +34,11 @@ struct AddTransactionView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 
-                
                     VStack (spacing: 16){
                         TransactionTypeSelector(type: $type)
                         TransactionAmountInput(amount: $amount)
                         TransactionDateInput(date: $date)
+                        TransactionCategoryInput(category: $category)
                     }
                     .padding(.top, 70)
                     .padding(.horizontal)

@@ -18,7 +18,7 @@ struct TransactionDateInput: View {
             HStack(spacing: 12) {
                 Text(date.formatted(.dateTime.day().month().year()))
                     .font(.title3)
-                    .foregroundStyle(Color("TextMuted"))
+                    .foregroundStyle(Color("TextSecondary"))
 
                 Spacer()
 
