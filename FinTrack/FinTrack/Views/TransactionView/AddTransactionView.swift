@@ -29,49 +29,15 @@ struct AddTransactionView: View {
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Informações") {
-                    TextField("Descrição", text: $title)
-
-                    TextField(
-                        "Valor",
-                        value: $amount,
-                        format: .number
-                    )
-                    .keyboardType(.decimalPad)
+            ZStack {
+                Color("Background")
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    TransactionTypeSelector(type: $type)
                 }
-
-                Section("Tipo") {
-                    Picker("Tipo", selection: $type) {
-                        ForEach(TransactionType.allCases) { type in
-                            Text(type.title)
-                                .tag(type)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                }
-
-                Section("Categoria") {
-                    Picker("Categoria", selection: $category) {
-                        ForEach(TransactionCategory.allCases) { category in
-                            Label(category.title, systemImage: category.icon)
-                                .tag(category)
-                        }
-                    }
-                }
-
-                Section {
-                    Button {
-                        saveTransaction()
-                    } label: {
-                        Text("Salvar lançamento")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .disabled(!isFormValid)
-                }
+                .padding(.horizontal)
             }
-            .navigationTitle("Novo lançamento")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button() {
@@ -80,8 +46,16 @@ struct AddTransactionView: View {
                         Image(systemName: "chevron.left")
                     }
                 }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("New Transaction")
+                        .foregroundStyle(Color("Foreground"))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                }
             }
         }
+        
     }
 
     private func saveTransaction() {
