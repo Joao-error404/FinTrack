@@ -53,9 +53,11 @@ struct AddGoalView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Cancel") {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button() {
                         dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
                     }
                 }
                 ToolbarItem(placement: .principal) {

@@ -13,7 +13,10 @@ struct AddTransactionView: View {
     @Environment(\.modelContext)
     private var modelContext
     
-    @Binding var selectedTab: String
+    @Environment(\.dismiss)
+    private var dismiss
+    
+//    @Binding var selectedTab: String
     @State private var title = ""
     @State private var amount = 0.0
     @State private var type: TransactionType = .expense
@@ -71,9 +74,9 @@ struct AddTransactionView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        selectedTab = "dashboard"
-                    }label:{
+                    Button() {
+                        dismiss()
+                    } label: {
                         Image(systemName: "chevron.left")
                     }
                 }
@@ -97,9 +100,14 @@ struct AddTransactionView: View {
 
         do {
             try modelContext.save()
-  
+            dismiss()
         } catch {
             print("Erro ao salvar transação: \(error)")
         }
     }
+}
+
+#Preview {
+//    @Previewable @State var selectedTab: String = "dashboard"
+    AddTransactionView()
 }

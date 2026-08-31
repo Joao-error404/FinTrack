@@ -10,6 +10,7 @@ import SwiftData
 
 struct ExpensesView: View {
     
+    @State private var showingTab = false
     @State private var selectedTab = 0
     
     @Query(sort: \FinancialTransaction.date, order: .reverse)
@@ -33,7 +34,7 @@ struct ExpensesView: View {
     }
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack (alignment: .topTrailing){
                 Color("Background")
                     .ignoresSafeArea()
                 ScrollView {
@@ -61,7 +62,13 @@ struct ExpensesView: View {
                     .padding(.horizontal)
                     
                 }
+                
+                CircleAddButton(showingTab: $showingTab)
             }
+        }
+        .sheet(isPresented: $showingTab) {
+            AddTransactionView()
+                .presentationDragIndicator(.visible)
         }
     }
 }
