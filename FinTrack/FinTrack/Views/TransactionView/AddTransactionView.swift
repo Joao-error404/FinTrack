@@ -16,12 +16,12 @@ struct AddTransactionView: View {
     @Environment(\.dismiss)
     private var dismiss
     
-//    @Binding var selectedTab: String
     @State private var title = ""
     @State private var amount = 0.0
     @State private var type: TransactionType = .expense
     @State private var category: TransactionCategory = .other
     @State private var date: Date = .now
+    @FocusState private var isFocused: Bool
 
     private var isFormValid: Bool {
         !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
@@ -36,13 +36,11 @@ struct AddTransactionView: View {
                 
                     VStack (spacing: 16){
                         TransactionTypeSelector(type: $type)
-                        TransactionAmountInput(amount: $amount)
+                        TransactionAmountInput(amount: $amount, isFocused: $isFocused)
                         TransactionDateInput(date: $date)
                         TransactionCategoryInput(category: $category)
                     }
-                    .padding(.top, 70)
                     .padding(.horizontal)
-                    .ignoresSafeArea(.container, edges: .top)
                     .frame(maxWidth: .infinity)
             }
             .toolbar {

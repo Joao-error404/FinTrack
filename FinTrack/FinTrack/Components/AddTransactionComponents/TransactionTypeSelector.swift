@@ -37,7 +37,7 @@ struct TransactionTypeSelector: View {
         } label: {
             Text(title)
                 .font(.headline)
-                .fontWeight(.bold)
+                .fontWeight(type == value ? .bold : .regular)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical)
                 .foregroundStyle(type == value ? Color("Foreground") : Color("TextMuted"))
