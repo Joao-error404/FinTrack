@@ -12,9 +12,16 @@ struct ExpensesView: View {
     
     @State private var showingTab = false
     @State private var selectedTab = 0
+
+    @Environment(\.modelContext) private var modelContext
+        
+    private func deleteTransaction(_ transaction: FinancialTransaction) {
+        withAnimation {
+            modelContext.delete(transaction)
+        }
+    }
     
     @Query(sort: \FinancialTransaction.date, order: .reverse)
-    
     private var transactions: [FinancialTransaction]
     
     private var totalIncome: Double {
@@ -57,7 +64,7 @@ struct ExpensesView: View {
                         
                         TransactionsFilterTab(selectedTab: $selectedTab)
                         
-                        TransactionsList(transactions: transactions, selectedTab: $selectedTab)
+                        TransactionsList(transactions: transactions, onDelete: deleteTransaction, selectedTab: $selectedTab)
                     }
                     .padding(.horizontal)
                     
