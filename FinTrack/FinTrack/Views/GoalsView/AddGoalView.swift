@@ -38,24 +38,26 @@ struct AddGoalView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 
-                ScrollView {
-                    VStack (spacing:16){
-                        GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount, isFocused: $textFieldFocused)
-                        
-                        DeadlineSection(hasDeadline: $hasDeadline, deadline: $deadline)
-                        
-                        AppearenceSection(icon: $icon, colorName: $colorName)
-                        
-                        AddGoalButton(isFormValid: isFormValid, action: saveGoal)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
+                VStack (spacing:16){
+                    GoalSection(title: $title, targetAmount: $targetAmount, currentAmount: $currentAmount, isFocused: $textFieldFocused)
+                    
+                    DeadlineSection(hasDeadline: $hasDeadline, deadline: $deadline)
+                    
+                    AppearenceSection(icon: $icon, colorName: $colorName)
+                    
+                    AddGoalButton(isFormValid: isFormValid, action: saveGoal)
                 }
+                .padding(.top, 70)
+                .padding(.horizontal)
+                .ignoresSafeArea(.container, edges: .top)
+                .frame(maxWidth: .infinity)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Cancel") {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button() {
                         dismiss()
+                    } label: {
+                        Image(systemName: "chevron.left")
                     }
                 }
                 ToolbarItem(placement: .principal) {

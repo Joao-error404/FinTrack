@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct CircleAddGoalButton: View {
-    @Binding var showingAddGoal: Bool
+struct CircleAddButton: View {
+    @Binding var showingTab: Bool
     
     var body: some View {
         Button {
-            showingAddGoal = true
+            showingTab = true
         } label: {
             Image(systemName: "plus")
                         .font(.body)

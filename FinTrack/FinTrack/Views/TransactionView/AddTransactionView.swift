@@ -13,82 +13,76 @@ struct AddTransactionView: View {
     @Environment(\.modelContext)
     private var modelContext
     
-    @Binding var selectedTab: String
-    @State private var title = ""
+    @Environment(\.dismiss)
+    private var dismiss
+    
+    @State private var description = ""
     @State private var amount = 0.0
     @State private var type: TransactionType = .expense
     @State private var category: TransactionCategory = .other
+    @State private var date: Date = .now
+    @FocusState private var isFocused: Bool
 
     private var isFormValid: Bool {
-        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         && amount > 0
     }
 
     var body: some View {
         NavigationStack {
-            Form {
-                Section("Informações") {
-                    TextField("Descrição", text: $title)
-
-                    TextField(
-                        "Valor",
-                        value: $amount,
-                        format: .number
-                    )
-                    .keyboardType(.decimalPad)
-                }
-
-                Section("Tipo") {
-                    Picker("Tipo", selection: $type) {
-                        ForEach(TransactionType.allCases) { type in
-                            Text(type.title)
-                                .tag(type)
-                        }
+            ZStack (alignment: .top){
+                Color("Background")
+                    .ignoresSafeArea()
+                
+                ScrollView {
+                    VStack (spacing: 16){
+                        TransactionTypeSelector(type: $type)
+                        TransactionAmountInput(amount: $amount, isFocused: $isFocused)
+                        TransactionDescriptionInput(description: $description, isFocused: $isFocused)
+                        TransactionDateInput(date: $date)
+                        TransactionCategoryInput(category: $category)
+                        AddTransactionButton(type: $type, isFormValid: isFormValid, action: saveTransaction)
                     }
-                    .pickerStyle(.segmented)
-                }
-
-                Section("Categoria") {
-                    Picker("Categoria", selection: $category) {
-                        ForEach(TransactionCategory.allCases) { category in
-                            Label(category.title, systemImage: category.icon)
-                                .tag(category)
-                        }
-                    }
-                }
-
-                Section {
-                    Button {
-                        saveTransaction()
-                    } label: {
-                        Text("Salvar lançamento")
-                            .frame(maxWidth: .infinity)
-                    }
-                    .disabled(!isFormValid)
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity)
                 }
             }
-            .navigationTitle("Novo lançamento")
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
-                        selectedTab = "dashboard"
-                    }label:{
+                    Button() {
+                        dismiss()
+                    } label: {
                         Image(systemName: "chevron.left")
                     }
                 }
+                
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        isFocused = false
+                    }
+                }
+                
+                ToolbarItem(placement: .principal) {
+                    Text("New Transaction")
+                        .foregroundStyle(Color("Foreground"))
+                        .font(.title2)
+                        .fontWeight(.bold)
+                }
             }
         }
+        
     }
 
     private func saveTransaction() {
-        let trimmedTitle = title.trimmingCharacters(
+        let trimmedTitle = description.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
 
         let transaction = FinancialTransaction(
             title: trimmedTitle,
             amount: amount,
+            date: date,
             type: type,
             category: category
         )
@@ -97,9 +91,13 @@ struct AddTransactionView: View {
 
         do {
             try modelContext.save()
-  
+            dismiss()
         } catch {
             print("Erro ao salvar transação: \(error)")
         }
     }
+}
+
+#Preview {
+    AddTransactionView()
 }

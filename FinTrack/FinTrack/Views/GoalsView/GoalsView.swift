@@ -52,10 +52,11 @@ struct GoalsView: View {
                 .scrollContentBackground(.hidden)
                 .padding(.horizontal)
                 
-                CircleAddGoalButton(showingAddGoal: $showingAddGoal)
+                CircleAddButton(showingTab: $showingAddGoal)
             }
             .sheet(isPresented: $showingAddGoal) {
                 AddGoalView()
+                    .presentationDragIndicator(.visible)
             }
         }
         
