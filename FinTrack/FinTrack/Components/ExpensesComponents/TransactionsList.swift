@@ -9,7 +9,9 @@ import SwiftUI
 
 struct TransactionsList: View {
     let transactions: [FinancialTransaction]
+    let onDelete: (FinancialTransaction) -> Void
     @Binding var selectedTab: Int
+
     
     var filteredTransactions: [FinancialTransaction] {
     switch selectedTab {
@@ -29,8 +31,15 @@ struct TransactionsList: View {
         LazyVStack(spacing: 0){
             ForEach(filteredTransactions) { transaction in
                 TransactionsRow(transaction: transaction)
+                    .contextMenu {
+                        Button(role: .destructive) {
+                            onDelete(transaction)
+                        } label: {
+                            Label("Delete", systemImage: "trash")
+                        }
+                    }
                 
-                if transaction.id != transactions.last?.id {
+                if transaction.id != filteredTransactions.last?.id {
                     Divider()
                         .overlay(Color("Border"))
                         .padding(.horizontal, 20)

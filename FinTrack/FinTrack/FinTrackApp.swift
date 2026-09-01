@@ -21,21 +21,19 @@ struct FinTrackApp: App {
                         Label("Dashboard", systemImage: "house.fill")
                     }
                     .tag("dashboard")
-                
-                AddTransactionView(selectedTab: $selectedTab)
-                    .tabItem {
-                        Label("Add", systemImage: "plus.circle.fill")
-                    }
-                    .tag("add")
-                
                 ExpensesView()
                     .tabItem {
                         Label("Transactions", systemImage: "wallet.bifold")
                     }
                     .tag("transactions")
+                GoalsView()
+                    .tabItem {
+                        Label("Goals", systemImage: "target")
+                    }
+                    .tag("goals")
             }
             .preferredColorScheme(.dark)
         }
-        .modelContainer(for: FinancialTransaction.self)
+        .modelContainer(for: [FinancialTransaction.self, Goal.self])
     }
 }

@@ -10,10 +10,18 @@ import SwiftData
 
 struct ExpensesView: View {
     
+    @State private var showingTab = false
     @State private var selectedTab = 0
+
+    @Environment(\.modelContext) private var modelContext
+        
+    private func deleteTransaction(_ transaction: FinancialTransaction) {
+        withAnimation {
+            modelContext.delete(transaction)
+        }
+    }
     
     @Query(sort: \FinancialTransaction.date, order: .reverse)
-    
     private var transactions: [FinancialTransaction]
     
     private var totalIncome: Double {
@@ -33,11 +41,10 @@ struct ExpensesView: View {
     }
     var body: some View {
         NavigationStack {
-            ZStack {
+            ZStack (alignment: .topTrailing){
                 Color("Background")
                     .ignoresSafeArea()
                 ScrollView {
-                    
                     TransactionsHeader(transactionCount: transactions.count)
                     
                     VStack {
@@ -57,11 +64,19 @@ struct ExpensesView: View {
                         
                         TransactionsFilterTab(selectedTab: $selectedTab)
                         
-                        TransactionsList(transactions: transactions, selectedTab: $selectedTab)
+                        TransactionsList(transactions: transactions, onDelete: deleteTransaction, selectedTab: $selectedTab)
                     }
+                    .padding(.horizontal)
                     
                 }
+                
+                CircleAddButton(showingTab: $showingTab)
             }
+        }
+        .sheet(isPresented: $showingTab) {
+            AddTransactionView()
+                .presentationDragIndicator(.visible)
+                .presentationDetents([.height(700)])
         }
     }
 }

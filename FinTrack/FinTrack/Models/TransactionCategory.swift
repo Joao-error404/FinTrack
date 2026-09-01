@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 enum TransactionCategory: String, Codable, CaseIterable, Identifiable {
     case food
@@ -24,21 +25,21 @@ enum TransactionCategory: String, Codable, CaseIterable, Identifiable {
     var title: String{
         switch self {
         case .food:
-            return "Alimentação"
+            return "Food"
         case .transport:
-            return "Transporte"
+            return "Transport"
         case .education:
-            return "Educação"
+            return "Education"
         case .investment:
-            return "Investimentos"
+            return "Investment"
         case .salary:
-            return "Salário"
+            return "Salary"
         case .entertainment:
-            return "Entretenimento"
+            return "Entertainment"
         case .health:
-            return "Saúde"
+            return "Health"
         case .other:
-            return "Outros"
+            return "Other"
         }
     }
     
@@ -60,6 +61,27 @@ enum TransactionCategory: String, Codable, CaseIterable, Identifiable {
             return "heart.fill"
         case .other:
             return "questionmark.circle.fill"
+        }
+    }
+    
+    var color: Color {
+        switch self {
+        case .food:
+            return .red
+        case .transport:
+            return .orange
+        case .education:
+            return .cyan
+        case .investment:
+            return .yellow
+        case .salary:
+            return .green
+        case .entertainment:
+            return .blue
+        case .health:
+            return .pink
+        case .other:
+            return .purple
         }
     }
     
