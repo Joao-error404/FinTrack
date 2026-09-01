@@ -27,14 +27,7 @@ struct TransactionAmountInput: View {
             }
             .focused($isFocused)
             .keyboardType(.decimalPad)
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    Spacer()
-                    Button("Done") {
-                        isFocused = false
-                    }
-                }
-            }
+    
     }
     
 }

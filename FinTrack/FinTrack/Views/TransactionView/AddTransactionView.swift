@@ -16,7 +16,7 @@ struct AddTransactionView: View {
     @Environment(\.dismiss)
     private var dismiss
     
-    @State private var title = ""
+    @State private var description = ""
     @State private var amount = 0.0
     @State private var type: TransactionType = .expense
     @State private var category: TransactionCategory = .other
@@ -24,7 +24,7 @@ struct AddTransactionView: View {
     @FocusState private var isFocused: Bool
 
     private var isFormValid: Bool {
-        !title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+        !description.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
         && amount > 0
     }
 
@@ -37,6 +37,7 @@ struct AddTransactionView: View {
                     VStack (spacing: 16){
                         TransactionTypeSelector(type: $type)
                         TransactionAmountInput(amount: $amount, isFocused: $isFocused)
+                        TransactionDescriptionInput(description: $description, isFocused: $isFocused)
                         TransactionDateInput(date: $date)
                         TransactionCategoryInput(category: $category)
                         AddTransactionButton(type: $type, isFormValid: isFormValid, action: saveTransaction)
@@ -53,6 +54,13 @@ struct AddTransactionView: View {
                     }
                 }
                 
+                ToolbarItemGroup(placement: .keyboard) {
+                    Spacer()
+                    Button("Done") {
+                        isFocused = false
+                    }
+                }
+                
                 ToolbarItem(placement: .principal) {
                     Text("New Transaction")
                         .foregroundStyle(Color("Foreground"))
@@ -65,7 +73,7 @@ struct AddTransactionView: View {
     }
 
     private func saveTransaction() {
-        let trimmedTitle = title.trimmingCharacters(
+        let trimmedTitle = description.trimmingCharacters(
             in: .whitespacesAndNewlines
         )
 

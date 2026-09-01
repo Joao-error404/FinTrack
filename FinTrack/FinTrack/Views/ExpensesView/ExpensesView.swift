@@ -69,7 +69,7 @@ struct ExpensesView: View {
         .sheet(isPresented: $showingTab) {
             AddTransactionView()
                 .presentationDragIndicator(.visible)
-                .presentationDetents([.height(600)])
+                .presentationDetents([.height(700)])
         }
     }
 }
