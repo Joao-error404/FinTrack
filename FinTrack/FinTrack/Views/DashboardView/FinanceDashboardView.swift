@@ -38,6 +38,39 @@ struct FinanceDashboardView: View {
         Array(transactions.prefix(5))
     }
     
+    private var currentMonthTransactions: [FinancialTransaction] {
+
+        transactions.filter {
+            Calendar.current.isDate(
+                $0.date,
+                equalTo: Date(),
+                toGranularity: .month
+            )
+        }
+    }
+    
+    private var totalIncomeMonth: Double {
+        currentMonthTransactions.filter{ $0.type == .income}
+            .reduce(0){ result, transaction
+                in
+                    result + transaction.amount
+            }
+    }
+    
+    private var totalExpenseMonth: Double {
+        currentMonthTransactions.filter{ $0.type == .expense}
+            .reduce(0){ result, transaction
+                in
+                    result + transaction.amount
+            }
+    }
+    
+    private var balanceMonth: Double {
+        totalIncomeMonth - totalExpenseMonth
+    }
+    
+    
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -49,8 +82,9 @@ struct FinanceDashboardView: View {
                         HeaderView()
                         
                         BalanceCardView(balance: balance,
-                                        income: totalIncome,
-                                        expense: totalExpense)
+                                        BalanceMonth: balanceMonth,
+                                        income: totalIncomeMonth,
+                                        expense: totalExpenseMonth)
                         
                         SummaryCardsView(balance: balance,
                                          income: totalIncome,

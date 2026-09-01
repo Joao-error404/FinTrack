@@ -10,12 +10,13 @@ import SwiftUI
 struct BalanceCardView: View {
     
     let balance: Double
+    let BalanceMonth: Double
     let income: Double
     let expense: Double
 
     private var percent: Double {
         let max = income + expense
-        let divisivel = balance * 100
+        let divisivel = BalanceMonth * 100
         let result = (divisivel / max)
         return result
     }

@@ -27,6 +27,16 @@ struct AddTransactionView: View {
     var body: some View {
         NavigationStack {
             Form {
+                Section("Tipo") {
+                Picker("Tipo", selection: $type) {
+                    ForEach(TransactionType.allCases) { type in
+                        Text(type.title)
+                            .tag(type)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+                
                 Section("Informações") {
                     TextField("Descrição", text: $title)
 
@@ -38,15 +48,6 @@ struct AddTransactionView: View {
                     .keyboardType(.decimalPad)
                 }
 
-                Section("Tipo") {
-                    Picker("Tipo", selection: $type) {
-                        ForEach(TransactionType.allCases) { type in
-                            Text(type.title)
-                                .tag(type)
-                        }
-                    }
-                    .pickerStyle(.segmented)
-                }
 
                 Section("Categoria") {
                     Picker("Categoria", selection: $category) {
