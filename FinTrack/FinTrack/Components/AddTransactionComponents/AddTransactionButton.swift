@@ -15,7 +15,8 @@ struct AddTransactionButton: View {
     var body: some View {
         Button(action: action) {
             Text("Add Transaction")
-                .frame(maxWidth: .infinity, maxHeight: 50)
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
         }
         .buttonStyle(.borderedProminent)
         .tint(type == .expense ? .red : .green)

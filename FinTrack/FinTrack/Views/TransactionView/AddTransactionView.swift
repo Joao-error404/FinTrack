@@ -34,6 +34,7 @@ struct AddTransactionView: View {
                 Color("Background")
                     .ignoresSafeArea()
                 
+                ScrollView {
                     VStack (spacing: 16){
                         TransactionTypeSelector(type: $type)
                         TransactionAmountInput(amount: $amount, isFocused: $isFocused)
@@ -44,6 +45,7 @@ struct AddTransactionView: View {
                     }
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity)
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
