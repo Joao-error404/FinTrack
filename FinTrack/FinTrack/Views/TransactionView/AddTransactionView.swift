@@ -39,6 +39,7 @@ struct AddTransactionView: View {
                         TransactionAmountInput(amount: $amount, isFocused: $isFocused)
                         TransactionDateInput(date: $date)
                         TransactionCategoryInput(category: $category)
+                        AddTransactionButton(type: $type, isFormValid: isFormValid, action: saveTransaction)
                     }
                     .padding(.horizontal)
                     .frame(maxWidth: .infinity)
@@ -88,6 +89,5 @@ struct AddTransactionView: View {
 }
 
 #Preview {
-//    @Previewable @State var selectedTab: String = "dashboard"
     AddTransactionView()
 }

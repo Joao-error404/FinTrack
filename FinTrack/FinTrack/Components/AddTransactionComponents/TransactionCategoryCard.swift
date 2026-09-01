@@ -36,6 +36,6 @@ struct TransactionCategoryCard: View {
 }
 
 #Preview {
-    var category: TransactionCategory = .food
+    let category: TransactionCategory = .food
     TransactionCategoryCard(category: category, isSelected: true)
 }
