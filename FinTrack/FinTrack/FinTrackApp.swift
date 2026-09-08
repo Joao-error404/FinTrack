@@ -31,6 +31,11 @@ struct FinTrackApp: App {
                         Label("Goals", systemImage: "target")
                     }
                     .tag("goals")
+                AnalyticView()
+                    .tabItem {
+                        Label("Analitics", systemImage: "chart.bar.fill")
+                    }
+                    .tag("analitics")
             }
             .preferredColorScheme(.dark)
         }

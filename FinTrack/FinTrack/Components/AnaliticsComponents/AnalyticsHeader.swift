@@ -1,15 +1,21 @@
+//
+//  AnaliticsHeader.swift
+//  FinTrack
+//
+//  Created by j.de.oliveira.neto on 04/09/26.
+//
+
 import SwiftUI
 
-struct TransactionsHeader: View {
-    let transactionCount: Int
+struct AnalyticsHeader: View {
     
     var body: some View {
         VStack (alignment: .leading){
-            Text("Transactions")
+            Text("Analitics")
                 .foregroundStyle(Color("Foreground"))
                 .font(.title)
                 .fontWeight(.bold)
-            Text("\(transactionCount) transactions - \(Date.currentMonthName)")
+            Text("\(Date.currentMonthName)")
                 .foregroundStyle(Color("TextMuted"))
                 .font(.footnote)
         }

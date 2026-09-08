@@ -14,6 +14,18 @@ struct SummaryCard: View {
     let value: Double
     let color: Color
 
+    func formattedNumber (_ number: Double) -> String {
+        let currencyCode = Locale.current.currency?.identifier ?? "BRL"
+        
+        if number >= 100_000 {
+            return String(format: "%.0fK", number / 1_000)
+        }
+        if number >= 1000 {
+            return "\(number / 1000)K"
+        }
+        return number.formatted(.currency(code: currencyCode))
+    }
+    
     var body: some View {
 
         VStack(alignment: .leading, spacing: 12) {
@@ -31,7 +43,7 @@ struct SummaryCard: View {
                 .font(.subheadline)
                 .foregroundStyle(Color("TextMuted"))
 
-            Text(value.formattedCurrency)
+            Text(formattedNumber(value))
                 .font(.title3)
                 .fontWeight(.bold)
                 .foregroundStyle(.white)
