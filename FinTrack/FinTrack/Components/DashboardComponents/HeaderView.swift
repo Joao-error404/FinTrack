@@ -24,20 +24,6 @@ struct HeaderView: View {
             
             Spacer()
             
-            Button{
-                
-            } label: {
-                Image(systemName: "Bell.fill")
-                    .foregroundColor(.white)
-                    .font(.title2)
-                    .padding()
-                    .background(
-                        Circle()
-                        
-                            .fill(Color.white.opacity(0.05))
-                    )
-                    
-            }
             
         }
         

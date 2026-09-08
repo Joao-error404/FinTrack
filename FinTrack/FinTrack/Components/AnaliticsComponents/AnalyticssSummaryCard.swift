@@ -1,0 +1,55 @@
+//
+//  TransactionsSummaryCard.swift
+//  FinTrack
+//
+//  Created by breno.farias on 26/08/26.
+//
+
+import SwiftUI
+
+struct AnalyticsSummaryCard: View {
+    let title: String
+    let amount: Double
+    let icon: String
+    let color: Color
+    
+    func formattedNumber (_ number: Double) -> String {
+        let currencyCode = Locale.current.currency?.identifier ?? "BRL"
+        
+        if number >= 100_000 {
+            return String(format: "%.0fK", number / 1_000)
+        }
+        if number >= 1000 {
+            return "\(number / 1000)K"
+        }
+        return number.formatted(.currency(code: currencyCode))
+    }
+    
+    var body: some View {
+        HStack(spacing: 20){
+            HStack {
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.2))
+                        .frame(width: 30, height: 30)
+                    
+                    Image(systemName: icon)
+                        .font(.system(size: 10))
+                        .foregroundStyle(color)
+                }
+                
+                VStack(alignment: .leading){
+                    Text(title)
+                        .font(.caption)
+                        .foregroundStyle(Color("TextMuted"))
+                    Text(formattedNumber(amount))
+                        .font(.headline)
+                        .lineLimit(1)
+                        .foregroundStyle(Color("Foreground"))
+                        .fontWeight(.bold)
+                }
+            }
+            .frameStyle()
+        }
+    }
+}

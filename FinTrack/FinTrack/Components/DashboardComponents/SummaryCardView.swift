@@ -33,7 +33,7 @@ struct SummaryCardsView: View {
 
             SummaryCard(
                 icon: "chart.line.uptrend.xyaxis",
-                title: "Entradas",
+                title: "Total entradas",
                 value: income,
                 color: Color("Success")
             )
